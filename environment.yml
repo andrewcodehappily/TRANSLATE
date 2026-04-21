@@ -1,0 +1,29 @@
+name: translation-zh-en
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - torch>=2.1.0
+    - torchvision
+    - torchaudio
+    - transformers>=4.40.0
+    - datasets>=2.15.0
+    - tokenizers>=0.15.0
+    - accelerate>=0.27.0
+    - numpy
+    - pandas
+    - sentencepiece
+    - sacremoses
+    - jieba
+    - peft>=0.7.0
+    - tensorboard
+    - wandb
+    - evaluate
+    - nltk
+    - tqdm
+    - pyyaml
+    - omegaconf
+    - einops

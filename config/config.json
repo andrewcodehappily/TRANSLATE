@@ -1,0 +1,90 @@
+{
+  "model_config": {
+    "model_type": "t5",
+    "vocab_size": 50000,
+    "d_model": 768,
+    "d_kv": 64,
+    "d_ff": 3072,
+    "num_layers": 12,
+    "num_decoder_layers": 12,
+    "num_heads": 12,
+    "relative_attention_num_buckets": 32,
+    "relative_attention_num_buckets_bidirectional": false,
+    "dropout_rate": 0.1,
+    "layer_norm_epsilon": 1e-6,
+    "initializer_factor": 1.0,
+    "feed_forward_proj": "relu",
+    "is_encoder_decoder": true,
+    "decoder_start_token_id": 0,
+    "pad_token_id": 0
+  },
+  "data_config": {
+    "dataset_name": "Helsinki-NLP/opus-100",
+    "language_pair": ["zh", "en"],
+    "max_seq_length": 256,
+    "train_split_ratio": 0.95,
+    "cache_dir": "./data/cache",
+    "preprocessed_dir": "./data/processed"
+  },
+  "training_config": {
+    "batch_size": 16,
+    "eval_batch_size": 32,
+    "num_epochs": 10,
+    "learning_rate": 1e-4,
+    "warmup_steps": 4000,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 4,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "mixed_precision": "bf16",
+    "seed": 42,
+    "num_workers": 2,
+    "pin_memory": false,
+    "prefetch_factor": 1
+  },
+  "optimizer_config": {
+    "optimizer_type": "AdamW",
+    "betas": [0.9, 0.999],
+    "eps": 1e-8
+  },
+  "scheduler_config": {
+    "type": "cosine_with_warmup",
+    "num_training_steps": 100000,
+    "num_warmup_steps": 4000
+  },
+  "evaluation_config": {
+    "eval_steps": 500,
+    "metric_for_best_model": "bleu",
+    "greater_is_better": true,
+    "save_total_limit": 3,
+    "load_best_model_at_end": true
+  },
+  "logging_config": {
+    "log_dir": "./logs",
+    "log_steps": 100,
+    "use_tensorboard": true,
+    "use_wandb": false,
+    "wandb_project": "translation-zh-en"
+  },
+  "hardware_config": {
+    "device": "mps",
+    "distributed": false,
+    "num_gpus": 1,
+    "world_size": 1,
+    "rank": 0
+  },
+  "checkpoint_config": {
+    "save_strategy": "steps",
+    "save_steps": 500,
+    "save_total_limit": 3,
+    "output_dir": "./models/checkpoints"
+  },
+  "back_translation_config": {
+    "enabled": false,
+    "model_name": null,
+    "max_samples": 50000,
+    "batch_size": 16,
+    "num_beams": 4,
+    "device": "mps"
+  }
+}
