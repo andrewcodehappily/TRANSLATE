@@ -275,7 +275,11 @@ class TranslationDataLoader:
                 return_tensors=None
             )
         
-        inputs["labels"] = labels["input_ids"]
+        # 把 padding token 替換成 -100，讓模型計算 Loss 時忽略它們
+        inputs["labels"] = [
+            [(l if l != self.tokenizer.pad_token_id else -100) for l in label]
+            for label in labels["input_ids"]
+        ]
         return inputs
     
     def prepare_dataset(self, dataset: DatasetDict, num_proc: int = 4) -> DatasetDict:
